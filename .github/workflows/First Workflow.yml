@@ -19,6 +19,8 @@ jobs:
     if: github.event.pull_request.merged == true && (github.head_ref == 'main' || startsWith(github.head_ref, 'release-') || startsWith(github.head_ref, 'hotfix-'))
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Print a message
         run: |
           echo "Pull request from branch ${{github.head_ref}} was merged!"
