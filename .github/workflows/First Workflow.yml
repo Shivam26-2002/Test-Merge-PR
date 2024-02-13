@@ -4,7 +4,7 @@ on:
     branches:
       - main
       - 'release-*'
-      - hotfix-123
+      - 'hotfix-*'
   pull_request:
     types: [closed]
 
