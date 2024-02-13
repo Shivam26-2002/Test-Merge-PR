@@ -21,11 +21,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Set up Git
+        run:
+         git config --global user.email github-actions@github.com
+         git config --global user.name github-actions
+    
+      - name: Fetch branches
+        run: git fetch origin
+      
+      # - name: Rebase dev branch
+      #   run: |
+      #     git checkout dev
+      #     git pull origin dev || git checkout -b dev origin/dev
+      #     git rebase origin/${GITHUB_REF#refs/heads/}
+      #     git push origin dev
+          
       - name: Print a message
         run: |
-          echo "Pull request from branch ${{github.head_ref}} was merged!"
-          git config --global user.email github-actions@github.com
-          git config --global user.name github-actions    
+          echo "Pull request from branch ${{github.head_ref}} was merged!"   
           git checkout dev
           git pull origin dev
           git rebase origin/$GITHUB_REF
