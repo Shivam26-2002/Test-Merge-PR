@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-      - 'rel-*'
-      - 'hot-*'
+      - 'tec-*'
+      - 'mec-*'
   pull_request:
     types: [closed]
 
