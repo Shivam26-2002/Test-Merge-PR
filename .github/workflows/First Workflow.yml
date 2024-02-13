@@ -22,10 +22,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      - name: Set up Git
-        run:
-         git config --global user.email github-actions@github.com
-         git config --global user.name github-actions
+      # - name: Set up Git
+      #   run:
+      #    git config --global user.email github-actions@github.com
+      #    git config --global user.name github-actions
     
       - name: Fetch branches
         run: git fetch origin
