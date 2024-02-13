@@ -1,0 +1,8 @@
+name: Print something
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing step
+        run: echo "Testing job"
