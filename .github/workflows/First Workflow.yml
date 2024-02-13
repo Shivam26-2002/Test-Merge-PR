@@ -1,10 +1,10 @@
 name: Merge Pull request
 on:
-  # push:
-  #   branches:
-  #     - main
-  #     - 'release-*'
-  #     - 'hotfix-*'
+  push:
+    branches:
+      - main
+      - 'release-*'
+      - 'hotfix-*'
   pull_request:
     types: [closed]
 
