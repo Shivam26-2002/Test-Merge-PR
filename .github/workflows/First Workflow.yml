@@ -20,6 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print a message
-        run: echo "Pull request from branch ${github.head_ref} was merged!"
+        run: echo "Pull request from branch ${{github.head_ref}} was merged!"
     
       
