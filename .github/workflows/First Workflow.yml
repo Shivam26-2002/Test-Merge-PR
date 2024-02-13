@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-      - 'tec-*'
-      - 'mec-*'
+      - 'release-*'
+      - 'hotfix-*'
   pull_request:
     types: [closed]
 
@@ -27,10 +27,10 @@ jobs:
           git fetch origin
           BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's/refs\/heads\///')
           echo "Branch name is $BRANCH_NAME!" 
-          git checkout dev
-          git pull origin dev
+          git checkout develop
+          git pull origin develop
           git rebase origin/$BRANCH_NAME
-          git push origin dev
+          git push origin develop
 
   on_merged:
     if: github.event.pull_request.merged == true && (github.head_ref == 'main' || startsWith(github.head_ref, 'release-') || startsWith(github.head_ref, 'hotfix-'))
@@ -47,9 +47,9 @@ jobs:
           git config --global user.name github-actions
           git fetch origin
           echo "Pull request from branch ${{github.head_ref}} was merged!"  
-          git checkout dev
-          git pull origin dev
+          git checkout develop
+          git pull origin develop
           git rebase origin/${{github.head_ref}}
-          git push origin dev
+          git push origin develop
     
       
