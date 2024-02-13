@@ -12,6 +12,8 @@ jobs:
   push-test:
     runs-on: ubuntu-latest
     steps:
+       - name: Checkout code
+         uses: actions/checkout@v2
        - name: Print a message
          env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
