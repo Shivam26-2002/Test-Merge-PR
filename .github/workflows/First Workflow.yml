@@ -25,7 +25,7 @@ jobs:
           git config --global user.email github-actions@github.com
           git config --global user.name github-actions
           git fetch origin
-          BRANCH_NAME=$(echo "${{ github.head_ref }}" | sed 's/refs\/heads\///')
+          BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's/refs\/heads\///')
           echo "Branch name is $BRANCH_NAME!" 
           # echo "Pull request from branch ${{github.head_ref}} was merged!"  
           git checkout dev
