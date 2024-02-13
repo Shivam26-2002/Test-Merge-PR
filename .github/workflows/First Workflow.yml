@@ -38,6 +38,8 @@ jobs:
       #     git push origin dev
           
       - name: Print a message
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Pull request from branch ${{github.head_ref}} was merged!"  
           git checkout dev
