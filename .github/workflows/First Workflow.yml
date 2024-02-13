@@ -27,8 +27,8 @@ jobs:
       #    git config --global user.email github-actions@github.com
       #    git config --global user.name github-actions
     
-      - name: Fetch branches
-        run: git fetch origin
+      # - name: Fetch branches
+      #   run: git fetch origin
       
       # - name: Rebase dev branch
       #   run: |
@@ -41,6 +41,9 @@ jobs:
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config --global user.email github-actions@github.com
+          git config --global user.name github-actions
+          git fetch origin
           echo "Pull request from branch ${{github.head_ref}} was merged!"  
           git checkout dev
           git pull origin dev
