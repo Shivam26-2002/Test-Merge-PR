@@ -1,10 +1,10 @@
 name: Merge Pull request
 on:
-  # push:
-  #   branches:
-  #     - main
-  #     - 'release-*'
-  #     - 'hotfix-*'
+  push:
+    branches:
+      - main
+      - 'release-*'
+      - 'hotfix-*'
   pull_request:
     types: [closed]
 
@@ -20,6 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print a message
-        run: echo "Pull request from branch ${github.head_ref} was merged!"
+        run: echo "Pull request from branch ${{github.head_ref}} was merged!"
     
       
