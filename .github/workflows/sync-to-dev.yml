@@ -29,11 +29,9 @@ jobs:
           echo "Branch name is $BRANCH_NAME!" 
           git checkout dep
           git pull origin dep
-          git status
-          git rebase $BRANCH_NAME dep
-          # git rebase origin/$BRANCH_NAME
+          git fetch origin $BRANCH_NAME
+          git rebase origin/$BRANCH_NAME
           git push origin dep
-          git diff --check
 
   on_merged:
     if: github.event.pull_request.merged == true && (github.head_ref == 'main' || startsWith(github.head_ref, 'release-') || startsWith(github.head_ref, 'hotfix-'))
