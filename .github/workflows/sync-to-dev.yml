@@ -29,7 +29,8 @@ jobs:
           echo "Branch name is $BRANCH_NAME!" 
           git checkout dep
           git pull origin dep
-          git rebase origin/$BRANCH_NAME
+          git rebase $BRANCH_NAME dep
+          # git rebase origin/$BRANCH_NAME
           git push origin dep
           git diff --check
 
