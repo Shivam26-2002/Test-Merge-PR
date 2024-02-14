@@ -29,8 +29,6 @@ jobs:
           echo "Branch name is $BRANCH_NAME!" 
           git checkout dev
           git pull origin dev
-          git fetch origin
-          git merge origin/dev
           git rebase origin/$BRANCH_NAME
           git push origin dev
           
