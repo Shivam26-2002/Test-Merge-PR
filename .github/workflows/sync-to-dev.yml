@@ -24,7 +24,7 @@ jobs:
          run: |
           git config --global user.email github-actions@github.com
           git config --global user.name github-actions
-          git fetch origin
+          # git fetch origin
           BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's/refs\/heads\///')
           echo "Branch name is $BRANCH_NAME!" 
           git checkout dev
