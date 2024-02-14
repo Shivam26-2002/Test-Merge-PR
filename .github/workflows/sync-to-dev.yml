@@ -29,7 +29,6 @@ jobs:
           echo "Branch name is $BRANCH_NAME!" 
           git checkout dev
           git pull origin dev
-          git mergetool
           git rebase origin/$BRANCH_NAME
           git push origin dev
           
