@@ -1,5 +1,1 @@
-Writing in main branch
-Main
-Writing in hotfix
-
-Hotfix
+New hotfix branch is created
