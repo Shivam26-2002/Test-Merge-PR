@@ -1,0 +1,97 @@
+name: A (Alphabet's)
+on: 
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract commit message
+        id: commit-message
+        if: always()
+        run: |  
+          result=$([[ "${{ github.event_name }}" == 'workflow_dispatch' ]] && echo "Build and deploy dev branch" || echo "${{ github.event.head_commit.message }}" | tr '\n' ' ' | sed 's/Signed-off-by:.*//;s/^[[:space:]]*//;s/[[:space:]]*$//')
+          echo "COMMIT_MESSAGE=$result" >> "$GITHUB_OUTPUT"
+
+      - name: Print commit message
+        if: always()
+        run: |  
+          echo ${{ steps.commit-message.outputs.COMMIT_MESSAGE }}
+
+      - name: Build Payload for Failure
+        id: build-payload
+        if: inputs.workflow_status == 'failure'
+        run: |
+          payload=$(jq -n --arg inspect_url "${{ inputs.inspect_url }}" \
+                          '{
+                            "blocks": [],
+                            "attachments": [
+                              {
+                                "color": "#dc3545",
+                                "blocks": [
+                                  {
+                                    "type": "section",
+                                    "text": {
+                                      "type": "mrkdwn",
+                                      "text": ":red_circle: *${{ steps.commit-message.outputs.COMMIT_MESSAGE }}* - failed to deploy"
+                                    }
+                                  },
+                                  {
+                                    "type": "context",
+                                    "elements": [
+                                      {
+                                        "type": "mrkdwn",
+                                        "text": "By *${{github.actor}}* on `${{github.ref_name}}`"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "section",
+                                    "text": {
+                                      "type": "mrkdwn",
+                                      "text": "Failed at XYZ"
+                                    }
+                                  },
+                                  {
+                                    "type": "actions",
+                                    "elements": [
+                                      {
+                                        "type": "button",
+                                        "text": {
+                                          "type": "plain_text",
+                                          "text": "Workflow Run"
+                                        },
+                                        "value": "workflow_run_url",
+                                        "action_id": "workflow_run_url",
+                                        "style": "danger",
+                                        "url": "${{ env.WORKFLOW_RUN_URL }}"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          } | if $inspect_url != "" then .attachments[0].blocks[3].elements += [{
+                              "type": "button",
+                              "text": {
+                                "type": "plain_text",
+                                "text": "Inspect"
+                              },
+                              "value": "inspect_url",
+                              "action_id": "inspect_url",
+                              "style": "danger",
+                              "url": "${{ inputs.inspect_url }}"
+                            }] else . end')
+
+                            
+          {
+              echo "PAYLOAD<<EOF"
+              echo "$payload"
+              echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+        env:          
+          WORKFLOW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}  
+
+      - name: Print payload
+        run: |
+          echo ${{ steps.build-payload.outputs.PAYLOAD }}
