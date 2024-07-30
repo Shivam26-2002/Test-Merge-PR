@@ -10,7 +10,7 @@ jobs:
         id: commit-message
         if: always()
         run: |  
-          result=$([[ "${{ github.event_name }}" == 'workflow_dispatch' ]] && echo "Build and deploy dev branch" || echo "${{ github.event.head_commit.message }}" | tr '\n' ' ' | sed 's/Signed-off-by:.*//;s/^[[:space:]]*//;s/[[:space:]]*$//')
+          result=$(echo "${{ github.event.head_commit.message }}" | tr '\n' ' ' | sed 's/Signed-off-by:.*//;s/^[[:space:]]*//;s/[[:space:]]*$//')
           echo "COMMIT_MESSAGE=$result" >> "$GITHUB_OUTPUT"
 
       - name: Print commit message
@@ -20,7 +20,6 @@ jobs:
 
       - name: Build Payload for Failure
         id: build-payload
-        if: inputs.workflow_status == 'failure'
         run: |
           payload=$(jq -n --arg inspect_url "${{ inputs.inspect_url }}" \
                           '{
