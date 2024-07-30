@@ -12,7 +12,7 @@ jobs:
         if: always()
         run: |  
           result=$(echo "${{ github.event.head_commit.message }}" | tr '\n' ' ' | sed 's/Signed-off-by:.*//;s/^[[:space:]]*//;s/[[:space:]]*$//')
-          echo "COMMIT_MESSAGE=$result" >> "$GITHUB_OUTPUT"
+          echo "COMMIT_MESSAGE=$result" >> "$GITHUB_OUTPUT"  
 
       - name: Print commit message
         if: always()
